@@ -156,7 +156,7 @@ function renderCloud() {
   const maxC = words[0].count, minC = words[words.length-1].count;
   const sizeScale = d3.scaleLinear().domain([minC, maxC]).range([minFont, maxFont]);
   const wordObjects = words.map(w => ({ text: w.word, size: sizeScale(w.count), count: w.count, rotate: getRotation(rotMode), color: colors[Math.floor(Math.random()*colors.length)] }));
-  layout.cloud().size([W,H]).words(wordObjects).padding(6).rotate(d=>d.rotate).font('Sora').fontSize(d=>d.size).spiral(spiral).on('end', drawn).start();
+  d3.layout.cloud().size([W,H]).words(wordObjects).padding(6).rotate(d=>d.rotate).font('Sora').fontSize(d=>d.size).spiral(spiral).on('end', drawn).start();
   function drawn(placed) {
     const svg = d3.select(wrap).append('svg').attr('width',W).attr('height',H);
     const g = svg.append('g').attr('transform',`translate(${W/2},${H/2})`);
