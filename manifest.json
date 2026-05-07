@@ -1,0 +1,12 @@
+{
+  "name": "Word Cloud",
+  "organization": "Custom",
+  "description": "A beautiful word cloud visualization powered by D3. Connect any BigQuery text + count columns.",
+  "logoUrl": "https://www.gstatic.com/images/icons/material/apps/fonts/1x/catalog/v5/opengraph_color.png",
+  "organizationUrl": "",
+  "supportUrl": "",
+  "privacyPolicyUrl": "",
+  "termsOfServiceUrl": "",
+  "packageUrl": "",
+  "devMode": true
+}

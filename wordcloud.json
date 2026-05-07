@@ -1,0 +1,133 @@
+{
+  "data": [
+    {
+      "id": "concepts",
+      "label": "Concepts",
+      "elements": [
+        {
+          "id": "dimension",
+          "label": "Word / Text",
+          "type": "DIMENSION",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        },
+        {
+          "id": "metric",
+          "label": "Count / Weight",
+          "type": "METRIC",
+          "options": {
+            "min": 1,
+            "max": 1
+          }
+        }
+      ]
+    }
+  ],
+  "style": [
+    {
+      "id": "colorGroup",
+      "label": "Colors",
+      "elements": [
+        {
+          "id": "colorScheme",
+          "label": "Color Scheme",
+          "type": "SELECT_SINGLE",
+          "defaultValue": "ocean",
+          "options": [
+            { "label": "Ocean", "value": "ocean" },
+            { "label": "Sunset", "value": "sunset" },
+            { "label": "Forest", "value": "forest" },
+            { "label": "Candy", "value": "candy" },
+            { "label": "Mono Dark", "value": "mono" }
+          ]
+        },
+        {
+          "id": "bgColor",
+          "label": "Background Color",
+          "type": "FILL_COLOR",
+          "defaultValue": { "color": "#ffffff" }
+        }
+      ]
+    },
+    {
+      "id": "fontGroup",
+      "label": "Font",
+      "elements": [
+        {
+          "id": "fontFamily",
+          "label": "Font",
+          "type": "FONT_FAMILY",
+          "defaultValue": "Sora"
+        },
+        {
+          "id": "minFontSize",
+          "label": "Min Font Size",
+          "type": "SLIDER",
+          "defaultValue": "12",
+          "options": {
+            "min": "8",
+            "max": "24",
+            "step": "1"
+          }
+        },
+        {
+          "id": "maxFontSize",
+          "label": "Max Font Size",
+          "type": "SLIDER",
+          "defaultValue": "64",
+          "options": {
+            "min": "32",
+            "max": "120",
+            "step": "4"
+          }
+        }
+      ]
+    },
+    {
+      "id": "layoutGroup",
+      "label": "Layout",
+      "elements": [
+        {
+          "id": "maxWords",
+          "label": "Max Words",
+          "type": "SLIDER",
+          "defaultValue": "80",
+          "options": {
+            "min": "10",
+            "max": "200",
+            "step": "10"
+          }
+        },
+        {
+          "id": "spiral",
+          "label": "Spiral Layout",
+          "type": "SELECT_SINGLE",
+          "defaultValue": "archimedean",
+          "options": [
+            { "label": "Archimedean", "value": "archimedean" },
+            { "label": "Rectangular", "value": "rectangular" }
+          ]
+        },
+        {
+          "id": "rotations",
+          "label": "Word Rotations",
+          "type": "SELECT_SINGLE",
+          "defaultValue": "mixed",
+          "options": [
+            { "label": "Horizontal only", "value": "horizontal" },
+            { "label": "Mixed (±30°)", "value": "mixed" },
+            { "label": "Vertical & Horizontal", "value": "vertical" }
+          ]
+        },
+        {
+          "id": "showTooltip",
+          "label": "Show Tooltip on Hover",
+          "type": "CHECKBOX",
+          "defaultValue": "true"
+        }
+      ]
+    }
+  ]
+}
