@@ -87,7 +87,6 @@ var SCHEMES={
 };
 var SAMPLE='word,count\nBigQuery,120\nLooker,98\nDashboard,87\nAnalytics,76\nData,150\nVisualization,65\nCloud,110\nSQL,72\nReport,58\nMetric,45\nPipeline,40\nStreaming,38\nStudio,90\nConnector,35\nChart,55\nFilter,48\nInsight,42\nQuery,80\nDataset,52\nWarehouse,44';
 document.getElementById('di').value=SAMPLE;
-
 function rot(mode){
   if(mode==='horizontal')return 0;
   if(mode==='vertical')return Math.random()<0.5?0:-90;
@@ -122,14 +121,10 @@ function go(){
   var maxC=words[0].count,minC=words[words.length-1].count;
   var sc=d3.scaleLinear().domain([minC,maxC]).range([minF,maxF]);
   var wobs=words.map(function(w){return{text:w.word,size:sc(w.count),count:w.count,rotate:rot(rotMode),color:colors[Math.floor(Math.random()*colors.length)]};});
-
   d3.layout.cloud()
-    .size([W,H])
-    .words(wobs)
-    .padding(6)
+    .size([W,H]).words(wobs).padding(6)
     .rotate(function(d){return d.rotate;})
-    .font('Sora')
-    .fontSize(function(d){return d.size;})
+    .font('Sora').fontSize(function(d){return d.size;})
     .spiral(spiral)
     .on('end',function(placed){
       var svg=d3.select(wrap).append('svg').attr('width',W).attr('height',H);
@@ -162,8 +157,7 @@ function go(){
           tip.style.opacity=0;
         });
       document.getElementById('stats').textContent=placed.length+' words · top: "'+words[0].word+'" ('+words[0].count.toLocaleString()+') · total: '+words.reduce(function(s,w){return s+w.count;},0).toLocaleString();
-    })
-    .start();
+    }).start();
 }
 window.addEventListener('load',go);
 window.addEventListener('resize',go);
