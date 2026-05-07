@@ -8,33 +8,28 @@
   <script src="https://cdn.jsdelivr.net/npm/d3@5/dist/d3.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/d3-cloud@1.2.7/build/d3.layout.cloud.min.js"></script>
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    :root {
-      --bg: #0f0f13; --surface: #1a1a24; --border: rgba(255,255,255,0.08);
-      --text: #f0f0f5; --muted: rgba(240,240,245,0.45); --accent: #7F77DD;
-    }
-    body { background: var(--bg); color: var(--text); font-family: 'Sora', sans-serif; min-height: 100vh; display: flex; flex-direction: column; }
-    header { padding: 1.25rem 2rem; border-bottom: 1px solid var(--border); display: flex; align-items: center; justify-content: space-between; }
-    header h1 { font-size: 0.95rem; font-weight: 500; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); }
-    header span { font-size: 11px; background: rgba(127,119,221,0.15); color: var(--accent); border: 1px solid rgba(127,119,221,0.3); padding: 3px 10px; border-radius: 20px; letter-spacing: 0.08em; text-transform: uppercase; }
-    main { flex: 1; display: grid; grid-template-columns: 260px 1fr; }
-    aside { border-right: 1px solid var(--border); padding: 1.5rem; display: flex; flex-direction: column; gap: 1.25rem; overflow-y: auto; }
-    .section-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
-    .control-group { display: flex; flex-direction: column; gap: 0.4rem; }
-    label { font-size: 12px; color: var(--muted); }
-    select, input[type=number] { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'Sora', sans-serif; font-size: 13px; padding: 7px 10px; border-radius: 8px; outline: none; appearance: none; }
-    select:focus, input[type=number]:focus { border-color: var(--accent); }
-    input[type=range] { width: 100%; accent-color: var(--accent); }
-    .range-row { display: flex; align-items: center; gap: 8px; }
-    .range-val { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--accent); min-width: 28px; text-align: right; }
-    textarea { width: 100%; background: var(--surface); border: 1px solid var(--border); color: var(--text); font-family: 'DM Mono', monospace; font-size: 11px; padding: 8px 10px; border-radius: 8px; resize: vertical; height: 130px; outline: none; line-height: 1.6; }
-    textarea:focus { border-color: var(--accent); }
-    button { width: 100%; padding: 9px; background: var(--accent); color: #fff; border: none; border-radius: 8px; font-family: 'Sora', sans-serif; font-size: 13px; font-weight: 500; cursor: pointer; transition: opacity 0.2s; }
-    button:hover { opacity: 0.85; }
-    #cloud-wrap { position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; min-height: 500px; }
-    #cloud-wrap svg { display: block; width: 100%; height: 100%; }
-    #tooltip { position: fixed; background: rgba(15,15,19,0.95); border: 1px solid var(--border); color: var(--text); font-size: 12px; font-family: 'DM Mono', monospace; padding: 5px 12px; border-radius: 6px; pointer-events: none; opacity: 0; transition: opacity 0.15s; z-index: 999; }
-    #stats { padding: 0.5rem 1.5rem; border-top: 1px solid var(--border); font-size: 11px; color: var(--muted); font-family: 'DM Mono', monospace; }
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--bg:#0f0f13;--surface:#1a1a24;--border:rgba(255,255,255,0.08);--text:#f0f0f5;--muted:rgba(240,240,245,0.45);--accent:#7F77DD}
+    body{background:var(--bg);color:var(--text);font-family:'Sora',sans-serif;min-height:100vh;display:flex;flex-direction:column}
+    header{padding:1.25rem 2rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+    header h1{font-size:0.95rem;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;color:var(--muted)}
+    header span{font-size:11px;background:rgba(127,119,221,0.15);color:var(--accent);border:1px solid rgba(127,119,221,0.3);padding:3px 10px;border-radius:20px}
+    main{flex:1;display:grid;grid-template-columns:260px 1fr}
+    aside{border-right:1px solid var(--border);padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto}
+    .lbl{font-size:11px;text-transform:uppercase;letter-spacing:0.1em;color:var(--muted);margin-bottom:0.4rem}
+    .cg{display:flex;flex-direction:column;gap:0.4rem;margin-top:0.6rem}
+    label{font-size:12px;color:var(--muted)}
+    select,textarea{width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);font-family:'Sora',sans-serif;font-size:13px;padding:7px 10px;border-radius:8px;outline:none;appearance:none}
+    textarea{font-family:'DM Mono',monospace;font-size:11px;height:130px;resize:vertical;line-height:1.6}
+    input[type=range]{width:100%;accent-color:var(--accent)}
+    .rr{display:flex;align-items:center;gap:8px}
+    .rv{font-size:12px;font-family:'DM Mono',monospace;color:var(--accent);min-width:28px;text-align:right}
+    button{width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-family:'Sora',sans-serif;font-size:13px;font-weight:500;cursor:pointer;margin-top:0.5rem}
+    button:hover{opacity:0.85}
+    #cw{position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;min-height:500px}
+    #cw svg{display:block}
+    #tip{position:fixed;background:rgba(15,15,19,0.95);border:1px solid var(--border);color:var(--text);font-size:12px;font-family:'DM Mono',monospace;padding:5px 12px;border-radius:6px;pointer-events:none;opacity:0;transition:opacity 0.15s;z-index:999}
+    #stats{padding:0.5rem 1.5rem;border-top:1px solid var(--border);font-size:11px;color:var(--muted);font-family:'DM Mono',monospace}
   </style>
 </head>
 <body>
@@ -45,18 +40,15 @@
 <main>
   <aside>
     <div>
-      <div class="section-label">Data</div>
-      <div class="control-group">
-        <label>Paste CSV or JSON (word, count)</label>
-        <textarea id="data-input"></textarea>
-        <button onclick="renderCloud()">Generate</button>
-      </div>
+      <div class="lbl">Data</div>
+      <label>Paste CSV or JSON</label>
+      <textarea id="di"></textarea>
+      <button onclick="go()">Generate</button>
     </div>
     <div>
-      <div class="section-label">Appearance</div>
-      <div class="control-group">
-        <label>Color scheme</label>
-        <select id="scheme">
+      <div class="lbl">Appearance</div>
+      <div class="cg"><label>Color scheme</label>
+        <select id="sc">
           <option value="ocean">Ocean</option>
           <option value="sunset">Sunset</option>
           <option value="forest">Forest</option>
@@ -64,127 +56,117 @@
           <option value="mono">Mono</option>
         </select>
       </div>
-      <div class="control-group" style="margin-top:0.6rem">
-        <label>Max words</label>
-        <div class="range-row">
-          <input type="range" id="max-words" min="10" max="150" value="80" oninput="document.getElementById('mw-val').textContent=this.value" />
-          <span class="range-val" id="mw-val">80</span>
-        </div>
+      <div class="cg"><label>Max words</label>
+        <div class="rr"><input type="range" id="mw" min="10" max="150" value="80" oninput="document.getElementById('mv').textContent=this.value"><span class="rv" id="mv">80</span></div>
       </div>
-      <div class="control-group" style="margin-top:0.6rem">
-        <label>Min font size</label>
-        <div class="range-row">
-          <input type="range" id="min-font" min="8" max="24" value="12" oninput="document.getElementById('minf-val').textContent=this.value" />
-          <span class="range-val" id="minf-val">12</span>
-        </div>
+      <div class="cg"><label>Min font</label>
+        <div class="rr"><input type="range" id="nf" min="8" max="24" value="12" oninput="document.getElementById('nv').textContent=this.value"><span class="rv" id="nv">12</span></div>
       </div>
-      <div class="control-group" style="margin-top:0.6rem">
-        <label>Max font size</label>
-        <div class="range-row">
-          <input type="range" id="max-font" min="32" max="110" step="4" value="72" oninput="document.getElementById('maxf-val').textContent=this.value" />
-          <span class="range-val" id="maxf-val">72</span>
-        </div>
+      <div class="cg"><label>Max font</label>
+        <div class="rr"><input type="range" id="xf" min="32" max="110" step="4" value="72" oninput="document.getElementById('xv').textContent=this.value"><span class="rv" id="xv">72</span></div>
       </div>
-      <div class="control-group" style="margin-top:0.6rem">
-        <label>Layout</label>
-        <select id="spiral">
-          <option value="archimedean">Archimedean</option>
-          <option value="rectangular">Rectangular</option>
-        </select>
+      <div class="cg"><label>Layout</label>
+        <select id="sp"><option value="archimedean">Archimedean</option><option value="rectangular">Rectangular</option></select>
       </div>
-      <div class="control-group" style="margin-top:0.6rem">
-        <label>Rotations</label>
-        <select id="rotations">
-          <option value="horizontal">Horizontal only</option>
-          <option value="mixed" selected>Mixed</option>
-          <option value="vertical">Vertical & Horizontal</option>
-        </select>
+      <div class="cg"><label>Rotations</label>
+        <select id="ro"><option value="horizontal">Horizontal only</option><option value="mixed" selected>Mixed</option><option value="vertical">Vertical &amp; Horizontal</option></select>
       </div>
     </div>
   </aside>
-  <div id="cloud-wrap"></div>
+  <div id="cw"></div>
 </main>
 <div id="stats">—</div>
-<div id="tooltip"></div>
+<div id="tip"></div>
 <script>
-const SCHEMES = {
-  ocean:  ['#042C53','#185FA5','#378ADD','#85B7EB','#1D9E75','#5DCAA5','#9FE1CB'],
-  sunset: ['#993C1D','#D85A30','#F0997B','#BA7517','#EF9F27','#FAC775','#712B13'],
-  forest: ['#3B6D11','#639922','#97C459','#1D9E75','#5DCAA5','#085041','#C0DD97'],
-  candy:  ['#7F77DD','#534AB7','#D4537E','#993556','#D85A30','#1D9E75','#EF9F27'],
-  mono:   ['#ffffff','#cccccc','#aaaaaa','#888888','#666666','#444444','#dddddd'],
+var SCHEMES={
+  ocean:['#042C53','#185FA5','#378ADD','#85B7EB','#1D9E75','#5DCAA5','#9FE1CB'],
+  sunset:['#993C1D','#D85A30','#F0997B','#BA7517','#EF9F27','#FAC775','#712B13'],
+  forest:['#3B6D11','#639922','#97C459','#1D9E75','#5DCAA5','#085041','#C0DD97'],
+  candy:['#7F77DD','#534AB7','#D4537E','#993556','#D85A30','#1D9E75','#EF9F27'],
+  mono:['#ffffff','#cccccc','#aaaaaa','#888888','#666666','#444444','#dddddd']
 };
-const SAMPLE = `word,count\nBigQuery,120\nLooker,98\nDashboard,87\nAnalytics,76\nData,150\nVisualization,65\nCloud,110\nSQL,72\nReport,58\nMetric,45\nPipeline,40\nStreaming,38\nStudio,90\nConnector,35\nChart,55\nFilter,48\nSegment,30\nInsight,42\nSchema,33\nTable,60\nQuery,80\nDataset,52\nWarehouse,44\nTransform,37\nModel,68`;
-document.getElementById('data-input').value = SAMPLE;
+var SAMPLE='word,count\nBigQuery,120\nLooker,98\nDashboard,87\nAnalytics,76\nData,150\nVisualization,65\nCloud,110\nSQL,72\nReport,58\nMetric,45\nPipeline,40\nStreaming,38\nStudio,90\nConnector,35\nChart,55\nFilter,48\nInsight,42\nQuery,80\nDataset,52\nWarehouse,44';
+document.getElementById('di').value=SAMPLE;
 
-function getRotation(mode) {
-  if (mode === 'horizontal') return 0;
-  if (mode === 'vertical') return Math.random() < 0.5 ? 0 : -90;
-  const r = Math.random();
-  if (r < 0.6) return 0;
-  return (Math.random() < 0.5 ? 1 : -1) * (Math.random() < 0.5 ? 15 : 30);
+function rot(mode){
+  if(mode==='horizontal')return 0;
+  if(mode==='vertical')return Math.random()<0.5?0:-90;
+  return Math.random()<0.6?0:(Math.random()<0.5?1:-1)*(Math.random()<0.5?15:30);
 }
-
-function parseInput(raw) {
-  raw = raw.trim();
-  if (!raw) return [];
-  if (raw.startsWith('[') || raw.startsWith('{')) {
-    let arr = JSON.parse(raw);
-    if (!Array.isArray(arr)) arr = [arr];
-    return arr.map(r => { const k = Object.keys(r); return { word: String(r[k[0]]||''), count: Number(r[k[1]]||1) }; });
+function parse(raw){
+  raw=raw.trim();
+  if(!raw)return[];
+  if(raw[0]==='['||raw[0]==='{'){
+    var a=JSON.parse(raw);
+    if(!Array.isArray(a))a=[a];
+    return a.map(function(r){var k=Object.keys(r);return{word:String(r[k[0]]||''),count:Number(r[k[1]]||1)};});
   }
-  const lines = raw.split('\n').filter(l => l.trim());
-  return lines.slice(1).map(l => { const c = l.split(','); return { word: (c[0]||'').trim(), count: Number((c[1]||'1').trim()) }; });
+  var lines=raw.split('\n').filter(function(l){return l.trim();});
+  return lines.slice(1).map(function(l){var c=l.split(',');return{word:(c[0]||'').trim(),count:Number((c[1]||'1').trim())};});
 }
+function go(){
+  var wrap=document.getElementById('cw');
+  wrap.innerHTML='';
+  var W=wrap.clientWidth||700,H=wrap.clientHeight||500;
+  var colors=SCHEMES[document.getElementById('sc').value]||SCHEMES.candy;
+  var maxW=parseInt(document.getElementById('mw').value);
+  var minF=parseInt(document.getElementById('nf').value);
+  var maxF=parseInt(document.getElementById('xf').value);
+  var spiral=document.getElementById('sp').value;
+  var rotMode=document.getElementById('ro').value;
+  var words;
+  try{words=parse(document.getElementById('di').value);}
+  catch(e){wrap.innerHTML='<p style="color:#F0997B;padding:2rem">Parse error: '+e.message+'</p>';return;}
+  words=words.filter(function(w){return w.word&&w.count>0;}).sort(function(a,b){return b.count-a.count;}).slice(0,maxW);
+  if(!words.length){wrap.innerHTML='<p style="color:var(--muted);padding:2rem">No data found.</p>';return;}
+  var maxC=words[0].count,minC=words[words.length-1].count;
+  var sc=d3.scaleLinear().domain([minC,maxC]).range([minF,maxF]);
+  var wobs=words.map(function(w){return{text:w.word,size:sc(w.count),count:w.count,rotate:rot(rotMode),color:colors[Math.floor(Math.random()*colors.length)]};});
 
-function renderCloud() {
-  const wrap = document.getElementById('cloud-wrap');
-  wrap.innerHTML = '';
-  const W = wrap.clientWidth || 700, H = wrap.clientHeight || 500;
-  const scheme = document.getElementById('scheme').value;
-  const maxWords = parseInt(document.getElementById('max-words').value);
-  const minFont = parseInt(document.getElementById('min-font').value);
-  const maxFont = parseInt(document.getElementById('max-font').value);
-  const spiral = document.getElementById('spiral').value;
-  const rotMode = document.getElementById('rotations').value;
-  const colors = SCHEMES[scheme] || SCHEMES.candy;
-  let words;
-  try { words = parseInput(document.getElementById('data-input').value); }
-  catch(e) { wrap.innerHTML = `<p style="color:#F0997B;font-size:13px;padding:2rem;">Parse error: ${e.message}</p>`; return; }
-  words = words.filter(w => w.word && w.count > 0).sort((a,b) => b.count - a.count).slice(0, maxWords);
-  if (!words.length) { wrap.innerHTML = '<p style="color:var(--muted);font-size:13px;">No data found.</p>'; return; }
-  const maxC = words[0].count, minC = words[words.length-1].count;
-  const sizeScale = d3.scaleLinear().domain([minC, maxC]).range([minFont, maxFont]);
-  const wordObjects = words.map(w => ({ text: w.word, size: sizeScale(w.count), count: w.count, rotate: getRotation(rotMode), color: colors[Math.floor(Math.random()*colors.length)] }));
-  d3.layout.cloud().size([W,H]).words(wordObjects).padding(6).rotate(d=>d.rotate).font('Sora').fontSize(d=>d.size).spiral(spiral).on('end', drawn).start();
-  function drawn(placed) {
-    const svg = d3.select(wrap).append('svg').attr('width',W).attr('height',H);
-    const g = svg.append('g').attr('transform',`translate(${W/2},${H/2})`);
-    const tip = document.getElementById('tooltip');
-    g.selectAll('text').data(placed).enter().append('text')
-      .style('font-family','Sora,sans-serif')
-      .style('font-size', d => d.size+'px')
-      .style('font-weight', d => d.size > maxFont*0.6 ? '700' : d.size > maxFont*0.35 ? '500' : '400')
-      .style('fill', d => d.color)
-      .style('cursor','default')
-      .attr('text-anchor','middle')
-      .attr('transform', d => `translate(${d.x},${d.y}) rotate(${d.rotate})`)
-      .text(d => d.text)
-      .style('opacity',0)
-      .transition().delay((_,i)=>i*15).duration(500).style('opacity',1)
-      .selection()
-      .on('mouseover', function(event, d) {
-        d3.select(this).transition().duration(100).style('opacity',0.6);
-        tip.innerHTML = `<strong>${d.text}</strong> · ${d.count.toLocaleString()}`;
-        tip.style.opacity = 1;
-      })
-      .on('mousemove', function(event) { tip.style.left=(event.clientX+14)+'px'; tip.style.top=(event.clientY-30)+'px'; })
-      .on('mouseout', function() { d3.select(this).transition().duration(100).style('opacity',1); tip.style.opacity=0; });
-    document.getElementById('stats').textContent = `${placed.length} words · top: "${words[0].word}" (${words[0].count.toLocaleString()}) · total: ${words.reduce((s,w)=>s+w.count,0).toLocaleString()}`;
-  }
+  d3.layout.cloud()
+    .size([W,H])
+    .words(wobs)
+    .padding(6)
+    .rotate(function(d){return d.rotate;})
+    .font('Sora')
+    .fontSize(function(d){return d.size;})
+    .spiral(spiral)
+    .on('end',function(placed){
+      var svg=d3.select(wrap).append('svg').attr('width',W).attr('height',H);
+      var g=svg.append('g').attr('transform','translate('+W/2+','+H/2+')');
+      var tip=document.getElementById('tip');
+      g.selectAll('text').data(placed).enter().append('text')
+        .style('font-family','Sora,sans-serif')
+        .style('font-size',function(d){return d.size+'px';})
+        .style('font-weight',function(d){return d.size>maxF*0.6?'700':d.size>maxF*0.35?'500':'400';})
+        .style('fill',function(d){return d.color;})
+        .style('cursor','default')
+        .attr('text-anchor','middle')
+        .attr('transform',function(d){return'translate('+d.x+','+d.y+') rotate('+d.rotate+')';})
+        .text(function(d){return d.text;})
+        .style('opacity',0)
+        .transition().delay(function(_,i){return i*15;}).duration(500).style('opacity',1)
+        .selection()
+        .on('mouseover',function(d){
+          d3.select(this).transition().duration(100).style('opacity',0.6);
+          tip.innerHTML='<strong>'+d.text+'</strong> · '+d.count.toLocaleString();
+          tip.style.opacity=1;
+        })
+        .on('mousemove',function(){
+          var e=d3.event;
+          tip.style.left=(e.clientX+14)+'px';
+          tip.style.top=(e.clientY-30)+'px';
+        })
+        .on('mouseout',function(){
+          d3.select(this).transition().duration(100).style('opacity',1);
+          tip.style.opacity=0;
+        });
+      document.getElementById('stats').textContent=placed.length+' words · top: "'+words[0].word+'" ('+words[0].count.toLocaleString()+') · total: '+words.reduce(function(s,w){return s+w.count;},0).toLocaleString();
+    })
+    .start();
 }
-window.addEventListener('load', renderCloud);
-window.addEventListener('resize', renderCloud);
+window.addEventListener('load',go);
+window.addEventListener('resize',go);
 </script>
 </body>
 </html>
